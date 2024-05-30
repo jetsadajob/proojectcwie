@@ -1,0 +1,283 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+session_start();
+
+$servername = "localhost";
+$username = "itwebsit_itweb126_projectcwie"; // or your database username
+$password = "Kt85gLyHOzgzEKosNw6s"; // or your database password
+$dbname = "itwebsit_itweb126_projectcwie";
+
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../login_student.php");
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../login_student.php");
+    exit();
+}
+
+$sql = "SELECT email FROM login_student WHERE id = '$user_id'";
+$result = mysqli_query($conn, $sql);
+
+if ($std = mysqli_fetch_assoc($result)) {
+    $email = $std['email'];
+
+    $sql = "SELECT * FROM company_detail WHERE email = '$email'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_array($result);
+} else {
+    echo "ไม่พบผู้ใช้";
+}
+
+$sql2 = "SELECT * FROM login_student WHERE id = '$user_id'";
+$result2 = mysqli_query($conn, $sql2);
+$std = mysqli_fetch_array($result2);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดบริษัท/หน่วยงาน</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta name="description" content="Smarthr - Bootstrap Admin Template">
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/index.css">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Prompt&display=swap" rel="stylesheet">
+    <title>รายละเอียดบริษัท/หน่วยงาน</title>
+
+    <!-- รูปโปรไฟล์ -->
+    <link rel="shortcut icon" type="image/x-icon" href="..assets/img/icon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Lineawesome CSS -->
+    <link rel="stylesheet" href="../assets/css/line-awesome.min.css">
+
+
+    <!-- Main CSS ของส่วนข้อมูล-->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/internship.css">
+
+    <style>
+        .breadcrumb a {
+            color: grey;
+        }
+
+        nav .breadcrumb {
+            margin-left: 35px;
+            padding-top: 65px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <?php
+        include('./navbar_menu.php');
+
+        ?>
+
+        <div class="page-wrapper">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../internship_student/internship_student_home.php">แบบฟอร์มฝึกงาน</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">รายละเอียดบริษัท/หน่วยงาน</li>
+                </ol>
+            </nav>
+            <div class="content container-fluid">
+
+
+                <div class="fw-semibold text-center">
+                    รายละเอียดบริษัท/หน่วยงาน
+                </div><br>
+
+                <form class="row g-3 needs-validation" novalidate action="./internship_company_update.php" method="post" class="form-horizontal" enctype="multipart/form-data">
+                    <div class="title" class="p-2 mb-2  text-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-buildings-fill" viewBox="0 0 16 16">
+                            <path d="M15 .5a.5.5 0 0 0-.724-.447l-8 4A.5.5 0 0 0 6 4.5v3.14L.342 9.526A.5.5 0 0 0 0 10v5.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V14h1v1.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V.5ZM2 11h1v1H2v-1Zm2 0h1v1H4v-1Zm-1 2v1H2v-1h1Zm1 0h1v1H4v-1Zm9-10v1h-1V3h1ZM8 5h1v1H8V5Zm1 2v1H8V7h1ZM8 9h1v1H8V9Zm2 0h1v1h-1V9Zm-1 2v1H8v-1h1Zm1 0h1v1h-1v-1Zm3-2v1h-1V9h1Zm-1 2h1v1h-1v-1Zm-2-4h1v1h-1V7Zm3 0v1h-1V7h1Zm-2-2v1h-1V5h1Zm1 0h1v1h-1V5Z" />
+                        </svg>&nbsp;บริษัท</div>
+
+                    <div class="col-md-12">
+                        <label class="require" for="validationCustom01" class="form-label">1. ชื่อบริษัท/หน่วยงาน</label>
+                        <input type="text" class="form-control" id="validationCustom01" placeholder=" ชื่อบริษัท/หน่วยงาน" name="company_detail_name" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="require" for="inputAddress" class="form-label">2. ที่อยู่บริษัท/หน่วยงาน</label>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="company_detail_address" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="require" for="inputtext" class="form-label">3. ตำบล</label>
+                        <input type="text" class="form-control" id="inputtext" placeholder="ตำบล" name="company_detail_subdistrict" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="require" for="inputtext" class="form-label">4. อำเภอ</label>
+                        <input type="text" class="form-control" id="inputtext" placeholder="อำเภอ" name="company_detail_district" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="require" for="inputtext" class="form-label">5. จังหวัด</label>
+                        <input type="text" class="form-control" id="inputtext" placeholder="จังหวัด" name="company_detail_province" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="require" for="coopEmergencyZip" class="form-label">6. รหัสไปรษณีย์</label>
+                        <input type="text" class="form-control" id="companydetailzip" placeholder="รหัสไปรษณีย์" name="company_detail_zip" required pattern="[0-9]{5}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="require" for="exampleFormControlTextarea1" class="form-label">7. รายละเอียดอื่น ๆ (ลักษณะงาน,
+                            บริษัท/หน่วยงานเกี่ยวข้องกับด้านใด)</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="รายละเอียดอื่น ๆ" name="company_detail_other_detail" required></textarea>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="require" for="validationCustom01" class="form-label">8. โปรดระบุด้วยว่าหนังสือเรียนถึงใคร (เช่น
+                            ผู้อำนวยการ......, ผู้จัดการ..., หัวหน้าส่วน เป็นต้น)</label>
+                        <input type="text" class="form-control" id="validationCustom01" placeholder="ชื่อผู้รับหนังสือ" name="company_detail_specity_who" required>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="require" for="validationCustom01" class="form-label">9. ชื่อผู้ประสานงาน/พี่เลี้ยง (กรณีที่ทราบ
+                            หากไม่ทราบไม่เป็นไร)</label>
+                        <input type="text" class="form-control" id="validationCustom01" placeholder="ชื่อผู้ประสานงาน/พี่เลี้ยง" name="company_detail_coordinator_name" required>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="phoneInput" class="form-label">10. เบอร์โทรศัพท์</label>
+                        <input type="tel" class="form-control" id="phoneInput" placeholder="กรอกหมายเลขโทรศัพท์" name="company_detail_phone" required pattern="[0-9]{10}">
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="require" for="validationCustom01" class="form-label">11. กำหนดการส่งเอกสารของทางบริษัท/หน่วยงาน
+                            (หากมี)</label>
+                        <input type="text" class="form-control" id="validationCustom01" placeholder="กำหนดการส่งเอกสารของทางบริษัท" name="company_detail_submit_document" required>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="require" for="validationCustom01" class="form-label">12. สิทธิ์การรักษาพยาบาล (บัตรทอง)</label>
+                        <input type="text" class="form-control" id="validationCustom01" placeholder="สิทธิ์การรักษาพยาบาล" name="company_detail_medical_privilege" required>
+                    </div>
+
+                    <div>
+                        <p class="require">13. การส่งเอกสาร</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" value="รับไปส่งเอง" name="company_detail_submit_document_type" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1" required>
+                                รับไปส่งเอง
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" value="สาขาวิชาส่งให้ตามที่อยู่บริษัท/หน่วยงาน ตามที่แจ้งในข้อ 2" name="company_detail_submit_document_type" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2" required>
+                                สาขาวิชาส่งให้ตามที่อยู่บริษัท/หน่วยงาน ตามที่แจ้งในข้อ 2
+                            </label>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="button text-right">
+                        <button type="button" class="btn btn-danger" data-toggle="button" aria-pressed="false">
+                            ยกเลิก
+                        </button>
+                        <button type="submit" class="btn btn-success" data-toggle="button" aria-pressed="false">
+                            บันทึก
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- เช็คหมายเลขโทรศัพท์ -->
+    <script>
+        var phoneInput = document.getElementById('phoneInput');
+
+        phoneInput.addEventListener('input', function(e) {
+            var phone = e.target.value.replace(/[^0-9]/g, ''); // ลบอักขระที่ไม่ใช่ตัวเลข
+            e.target.value = phone.slice(0, 10); // จำกัดจำนวนตัวเลขไม่เกิน 10 ตัว
+        });
+
+        phoneInput.addEventListener('blur', function(e) {
+            var phone = e.target.value;
+            if (phone.length !== 10) {
+                alert('กรุณากรอกหมายเลขโทรศัพท์ให้ถูกต้อง (10 หลัก)');
+            }
+        });
+    </script>
+
+    <!-- เช็ครหัสไปรษณีย์ -->
+    <script>
+        document.getElementById('companydetailzip').addEventListener('input', function(e) {
+            var zip = e.target.value.replace(/[^0-9]/g, ''); // ลบอักขระที่ไม่ใช่ตัวเลข
+            e.target.value = zip.slice(0, 5); // จำกัดจำนวนตัวเลขไม่เกิน 5 ตัว
+        });
+
+        document.getElementById('companydetailzip').addEventListener('blur', function(e) {
+            var zip = e.target.value;
+            if (zip.length !== 5) {
+                alert('กรุณากรอกรหัสไปรษณีย์ให้ถูกต้อง (5 หลัก)');
+            }
+        });
+    </script>
+
+    <!-- jQuery -->
+    <script src="../assets/js/jquery-3.5.1.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+
+    <!-- Slimscroll JS ตัวเลื่อนแทบข้างๆ -->
+    <script src="../assets/js/jquery.slimscroll.min.js"></script>
+
+    <!-- Chart JS ส่วนของกราฟ-->
+    <script src="../assets/plugins/morris/morris.min.js"></script>
+    <script src="../assets/plugins/raphael/raphael.min.js"></script>
+    <script src="../assets/js/chart.js"></script>
+
+    <!-- Custom JS -->
+    <script src="../assets/js/app.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+@font-face {
+	font-family: 'Prompt';
+	src: url(../Prompt/Prompt-Light.ttf); 
+} 
+
+*{
+	font-family: 'Prompt';
+    box-sizing: border-box;
+}
+
+/* blog */
+
+.box-blogs-blog {
+    max-width: 991px;
+    margin: auto;
+    padding: 20px 0px; 
+}
+  
+.blog {
+    margin-bottom: 20px;
+    display: flex;
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+    border-radius: 20px; 
+}
+    
+.blog:hover {
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0px 24px 64px rgba(0, 0, 0, 0.04); 
+}
+
+.blog .blog-image {
+    width: 20%; 
+    
+}
+
+.blog .blog-image img {
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 20px;
+    
+
+}
+
+.blog .blog-meta {
+    width: 70%;
+    padding: 1rem;
+    flex: 1;
+    margin-left: 1rem; 
+}
+
+.blog .blog-title {
+    /* font-size: 2rem; */
+    margin: 0px;
+    margin-bottom: 1rem; 
+}
+
+.blog .blog-title > a {
+    display: block;
+    color: #081F32;
+    text-decoration: none; 
+}
+
+.blog .blog-title > a:hover {
+    color: #007AE9; }
+
+.blog .blog-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem; 
+}
+
+.blog .blog-top .cat {
+    display: block;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #6E798C; 
+}
+
+.blog .blog-top .cat:hover {
+    color: #007AE9; }
+
+.blog .blog-top .date {
+    color: #6E798C; 
+}
+
+.blog .blog-bottom {
+    display: flex;
+    margin-top: 1rem;
+    justify-content: space-between; 
+}
+
+.blog .blog-bottom .avatars {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.5rem; 
+}
+
+.blog .blog-bottom .avatars img {
+    width: 32px;
+    height: 32px;
+    justify-content: space-between; 
+}
+
+.blog .blog-bottom .username {
+    color: #007AE9;
+    font-weight: 600; 
+}
+
+.blog .blog-bottom .readmore {
+    display: block;
+    margin-left: 100px;
+    /* padding: 5px 10px; */
+    text-decoration: none;
+    color: #007AE9;
+    font-weight: 600;
+    transition: transform 0.3s ease; 
+}
+
+.blog .blog-bottom .readmore:hover {
+    transition: transform 0.3s ease;
+    transform: translateX(-10px); 
+}
+  
+.box-blogs-blog.-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; }
+
+.box-blogs-blog.-grid .blog {
+    width: calc(33.33333% - 10px);
+    display: block;
+    padding: 1rem; }
+
+.box-blogs-blog.-grid .blog .blog-title {
+    font-size: 1.5rem; 
+}
+
+.box-blogs-blog.-grid .blog .blog-image {
+    width: 100%; 
+}
+
+.box-blogs-blog.-grid .blog .blog-image img {
+    border-radius: 20px;
+    width: 100%; 
+}
+
+.box-blogs-blog.-grid .blog .blog-meta {
+    width: 100%;
+    margin-left: 0px;
+    /* padding: 0px; */
+    margin-top: 1rem; 
+}
+
+.edit {
+    color: darkblue;
+}
+
+.delete {
+    color: #DB504A;
+}
+
+  /*Responsive Blog*/
+  @media (max-width: 991px) {
+    .box-blogs-blog.-grid {
+        display: block; }
+    .box-blogs-blog.-grid .blog {
+        width: 100%;
+        display: flex; }
+    .box-blogs-blog.-grid .blog .blog-image {
+        width: 200px; }
+    .box-blogs-blog.-grid .blog .blog-meta {
+        margin-left: 20px;
+        margin-top: 0px; } 
+    }
+  
+@media (max-width: 768px) {
+    .box-blogs-blog {
+        padding: 20px; }
+    .blog {
+        display: block; }
+    .blog .blog-image {
+        width: 100%; }
+    .blog .blog-image img {
+        border-radius: 20px; }
+    .blog .blog-meta {
+        width: 100%;
+        margin-left: 0px; }
+    .box-blogs-blog.-grid .blog {
+        display: block; }
+    .box-blogs-blog.-grid .blog .blog-image {
+        width: 100%; }
+    .box-blogs-blog.-grid .blog .blog-meta {
+        margin-left: 0px;
+        margin-top: 1rem; } 
+    }
+
+.btn-download {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 36px;
+    background: var(--blue);
+    color: var(--light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-gap: 10px;
+    font-weight: 500;
+}
+
+.head-title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	grid-gap: 16px;
+	flex-wrap: wrap;
+}
+.head-title .left h3 {
+	font-size: 36px;
+	font-weight: 600;
+	margin-bottom: 10px;
+	color: var(--dark);
+}
+
+.head-title .btn-download {
+	height: 36px;
+	padding: 0 16px;
+	border-radius: 36px;
+	background: var(--blue);
+	color: var(--light);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-gap: 10px;
+	font-weight: 500;
+}

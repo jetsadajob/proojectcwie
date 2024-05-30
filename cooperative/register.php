@@ -1,0 +1,80 @@
+<?php
+include('server.php');
+
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require './vendor/autoload.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+// if ($conn->connect_error) {
+//     die("เชื่อมต่อฐานข้อมูลล้มเหลว: " . $conn->connect_error);
+// }
+
+    // Validate and sanitize input data
+    $txt_role = $_POST['txt_role'];
+    $txt_std_prefix = $_POST['txt_std_prefix'];
+    $txt_std_fname = htmlspecialchars($_POST['txt_std_fname']);
+    $txt_std_lname = htmlspecialchars($_POST['txt_std_lname']);
+    $txt_std_id = $_POST['txt_std_id'];
+    $txt_year_of_study = $_POST['txt_year_of_study'];
+    $txt_major = $_POST['txt_major'];
+    $txt_std_project = $_POST['txt_std_project'];
+    $txt_email = filter_var($_POST['txt_email'], FILTER_SANITIZE_EMAIL);
+    $txt_password = $_POST['txt_password'];
+
+    // Create OTP
+    $otp = rand(100000, 999999);
+
+    // Assign role based on selected user type
+    if ($txt_role == 'นักศึกษาสหกิจศึกษา') {
+        $role = 'cooperative_student'; // Assign 'cooperative_student' for cooperative education students
+    } elseif ($txt_role == 'นักศึกษาฝึกงาน') {
+        $role = 'internship_student'; // Assign 'internship_student' for internship students
+    } else {
+        // Handle other cases or set a default role if needed
+        $role = 'other'; // For example, assign 'other' for other types of users
+    }
+
+
+        // Create a new PHPMailer instance
+        $mail = new PHPMailer(true);
+
+        try {
+            // Server settings
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';  
+            $mail->SMTPAuth   = true;
+            $mail->Username = 'ratanathida.mark@gmail.com'; // Your Gmail email address
+            $mail->Password = 'bvvh urik lvdi umuw'; // Your Gmail password             
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
+            $mail->setFrom('ratanathida.mark@gmail.com', 'cwie cp kku');            
+            $mail->addAddress($txt_email);
+            $mail->isHTML(true);
+            $mail->Subject = 'cwie cp kku otp';
+            $mail->Body = 'รหัส OTP ของคุณคือ: ' . $otp;
+            $mail->send();
+
+
+            // บันทึกข้อมูลผู้ใช้และ OTP ลงในตารางชั่วคราว
+            $stmt = $conn->prepare("INSERT INTO user_otp (role, std_prefix, std_fname, std_lname, std_id, year_of_study, major, std_project, email, password, otp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssssssssss", $role, $txt_std_prefix, $txt_std_fname, $txt_std_lname, $txt_std_id, $txt_year_of_study, $txt_major, $txt_std_project, $txt_email, $txt_password,  $otp);
+            $stmt->execute();
+
+            
+
+
+            header("Location: ./confirm_otp.php?email=" . urlencode($txt_email));
+        } catch (Exception $e) {
+        $alertType = 'error';
+        $alertMessage = 'เกิดข้อผิดพลาดในการส่งอีเมล: ' . $mail->ErrorInfo;
+    }
+?>

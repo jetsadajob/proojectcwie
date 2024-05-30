@@ -1,0 +1,170 @@
+<?php
+session_start();
+include './work/dbwork.php';
+
+if (!isset($_SESSION['id'])) {
+    header('Location: ./registerr/login.php');
+    exit();
+}
+
+
+$id = $_GET['id']; // รับค่า id จาก URL
+$sql = "SELECT * FROM login_student 
+        RIGHT JOIN coopperative_education_report_form ON login_student.email = coopperative_education_report_form.email 
+        WHERE login_student.role = 'cooperative_student' 
+        AND login_student.email = '$id'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_array($result);
+// $consent_form = $row['coopperative_perental_consent_form']; // เปลี่ยนชื่อคอลัมน์ที่เก็บชื่อไฟล์ตามฐานข้อมูลของคุณ
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ใบรับรองการฝึกงาน</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta name="description" content="Smarthr - Bootstrap Admin Template">
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/index.css">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Prompt&display=swap" rel="stylesheet">
+    <title>ใบยินยอมจากผู้ปกครอง</title>
+
+    <!-- รูปโปรไฟล์ -->
+    <link rel="shortcut icon" type="image/x-icon" href="..assets/img/icon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+    <!-- ฟอนต์ CSS -->
+    <!-- <link rel="stylesheet" href="../assets/css/font-awesome.min.css"> -->
+
+    <!-- Lineawesome CSS -->
+    <link rel="stylesheet" href="../assets/css/line-awesome.min.css">
+
+    <!-- กราฟ CSS -->
+    <!-- <link rel="stylesheet" href="../assets/plugins/morris/morris.css"> -->
+
+    <!-- Main CSS ของส่วนข้อมูล-->
+    <link rel="stylesheet" href="../internship/assets/css/style.css">
+    <link rel="stylesheet" href="../internship/assets/css/dashboard.css">
+    <link rel="stylesheet" href="../internship/assets/css/internship_book.css">
+
+    <!-- Boxicons -->
+    <!-- <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'> -->
+
+</head>
+
+<body>
+
+    <!-- <div class="text-center mt-5"> -->
+    <!-- <div class="container"> -->
+    <div class="main-wrapper">
+
+        <?php
+        include('./nav_admin.php');
+
+        ?>
+
+        <!-- ส่วนของข้อมูลทั้งหมด -->
+        <div class="page-wrapper">
+            <!-- ส่วนของข้อมูล -->
+            <div class="content container-fluid">
+
+
+                <div class="nameform">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">หน้าหลัก</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">ใบรับรองการฝึกงาน</li>
+                        </ol>
+                    </nav>
+                    <!-- <div class="bordermain"> -->
+                    <div class="text-center">
+                        <h5>ใบรับรองการฝึกงาน</h5>
+                    </div><br>
+
+                    <!-- <hr> -->
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">แนบไฟล์</label>
+                        <td>
+                            <!-- <div class="kv-attribute"><a href="" target="_blank" style=" color: #0d6efd;"><?php echo ($book_file); ?></a></div> -->
+
+
+                            <div class="kv-attribute">
+                                <a href="../internship/internship_student/uploadscoop/<?php echo $row['coop_report_file']; ?>" target="_blank" style="color: #0d6efd;"><?php echo basename($row['coop_report_file']); ?></a>
+                            </div>
+
+                            <p>นามสกุลไฟล์ที่สามารถแนบได้ pdf, png, jpg, jpeg</p>
+                            <br>
+
+                            <form action="./cooperative_report_update.php" method="post" class="form-horizontal" enctype="multipart/form-data">
+                                <div class="mb-3 ">
+                                    <label class="require form-label" for="comment">นักศึกษาต้องแก้ไข (แอดมิน)</label>
+                                    <textarea class="form-control" id="comment" rows="3" placeholder="นักศึกษาต้องแก้ไข" name="comment"><?php echo isset($row['comment']) ? $row['comment'] : ''; ?></textarea>
+
+                                    <!-- Add an input hidden field to store the 'email' -->
+                                    <input type="hidden" name="email" value="<?php echo $id; ?>">
+
+                                    <div class="button text-right">
+                                        <button type="submit" id="edit" class="btn btn-warning" data-toggle="button" name="status_admin" value="3">แก้ไข</button>
+                                        <button type="submit" id="submit" class="btn btn-success" data-toggle="button" name="status_admin" value="2">อนุมัติ</button>
+                                        <button type="submit" id="cancel" class="btn btn-danger" data-toggle="button" name="status_admin" value="4">ไม่อนุมัติ</button>
+                                    </div>
+                            </form>
+                            <!-- </div> -->
+
+
+                    </div>
+                    <!-- /ส่วนของข้อมูล -->
+                </div>
+                <!-- /Page Wrapper -->
+                <!-- ส่วนของข้อมูลทั้งหมด -->
+            </div>
+            <!-- /ส่วนของข้อมูล -->
+        </div>
+        <!-- jQuery -->
+        <script src="../assets/js/jquery-3.5.1.min.js"></script>
+
+        <!-- Bootstrap Core JS -->
+        <script src="./assets/js/popper.min.js"></script>
+        <script src="./assets/js/bootstrap.min.js"></script>
+
+        <!-- Slimscroll JS ตัวเลื่อนแทบข้างๆ -->
+
+        <!-- Chart JS ส่วนของกราฟ-->
+        <script src="./assets/plugins/morris/morris.min.js"></script>
+        <script src="./assets/plugins/raphael/raphael.min.js"></script>
+        <script src="./assets/js/chart.js"></script>
+
+        <!-- Custom JS -->
+        <script src="./assets/js/app.js"></script>
+
+
+
+
+        <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+        <script src="../script.js"></script>
+</body>
+
+</html>

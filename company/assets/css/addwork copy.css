@@ -1,0 +1,313 @@
+@font-face {
+	font-family: 'Prompt';
+	src: url(../Prompt/Prompt-Light.ttf); 
+}
+
+*{
+	font-family: 'Prompt';
+}
+
+/* addwork */
+.information{
+	border-radius: 10px;
+	border : solid #eee;
+	background-color:rgb(210, 227, 241);
+}
+.information h5{
+	color: #023a75;
+	margin: 5px 2px 2px 10px;
+}
+
+.information .content{
+	color: #023a75;
+	margin: 2px 3px 2px 10px;
+	font-size: 12px;
+}
+
+/* Form */
+.table-data{
+    border : solid #dddcdc;
+    border-radius: 20px;
+    background-color: #fff;
+}
+.table-data form{
+	position: relative;
+	margin-top: 16px;
+	/* min-height: 700px; */
+	overflow: hidden;
+}
+.table-data form .form{
+	/* position: absolute; */
+	/* background-color: #fff; */
+	transition: 0.3s ease;
+}
+
+.form.secActive .form.first{
+	opacity: 0;
+	pointer-events: none;
+	transform: translateX(-100%);
+}
+
+.table-data form .title{
+	display: block;
+	margin-bottom: 8px;
+	font-size: 16px;
+	font-weight: 500;
+	margin: 6px 0;
+	color: #333;
+}
+
+.table-data form .fields{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+form .fields .input-field{
+	display: flex;
+	width: calc(100% / 3 - 15px);
+	flex-direction: column;
+	margin: 4px 0;
+}
+
+.input-field label {
+	font-size: 12px;
+	font-weight: 500;
+	color: #2e2e2e;
+}
+.typework {
+	outline: none;
+	font-size: 14px;
+	font-weight: 400;
+	color: #333;
+	border-radius: 5px;
+	border: 1px solid #aaa;
+	padding: 0 15px ;
+	height: 38px;
+	margin: 8px 0;
+}
+
+.input-field input {
+	outline: none;
+	font-size: 14px;
+	font-weight: 400;
+	color: #333;
+	border-radius: 5px;
+	border: 1px solid #aaa;
+	padding: 0 15px;
+	height: 38px;
+	margin: 8px 0;
+}
+
+.input-field input:is(:focus, :valid){
+	box-shadow: 0 3px 6px rgba(0,0,0,0.13);
+}
+
+.input-field input[type="date"]{
+	color: #707070;
+}
+
+.input-field input[type="date"]:valid{
+	color: #333;
+}
+
+.table-data form button, .backBtn{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 45px;
+	max-width: 200px;
+	width: 100%;
+	border: none;
+	outline: none;
+	color: #fff;
+	border-radius: 5px;
+	margin: 25px 0;
+	background-color: #4070f4;
+	transition: all 0.3s linear;
+	cursor: pointer;
+}
+
+.table-data form button,
+.table-data form .backBtn{
+	font-size: 14px;
+	font-weight: 400;
+}
+
+form button:hover{
+	background-color: #265df2;
+}
+
+form button i,
+form .backBtn i{
+	margin: 0 6px;
+}
+
+form .backBtn i{
+	transform: rotate(180deg);
+}
+
+form .buttons{
+	display: flex;
+	align-items: center;
+}
+
+/* form.buttons button , .backBtn{
+	margin-right: 14px;
+} */
+
+@media (max-width: 750px){
+	.table-data form{
+		overflow-y: scroll;
+	}
+	.table-data form::-webkit-scrollbar{
+		display: none;
+	}
+	form .fields .input-field{
+		width: calc(100% / 2 - 15px);
+	}
+}
+@media (max-width: 550px){
+	form .fields .input-field{
+		width: 100%;
+	}
+}
+
+/* End Form */
+
+.checkmark{
+	font-size: 14px;
+}
+
+.table-data {
+	display: flex;
+	flex-wrap: wrap;
+	grid-gap: 24px;
+	margin-top: 24px;
+	width: 100%;
+	color: var(--dark);
+}
+.table-data > div {
+	border-radius: 20px;
+	background: var(--light);
+	padding: 24px;
+	overflow-x: auto;
+}
+.table-data .head {
+	background-color: #024ea0;
+	height: 40px;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	grid-gap: 16px;
+	margin-bottom: 24px;
+}
+.table-data .head h3 {
+	margin-right: auto;
+	font-size: 24px;
+	font-weight: 600;
+}
+.table-data .head .bx {
+	cursor: pointer;
+}
+
+.table-data .order {
+	flex-grow: 1;
+	flex-basis: 500px;
+}
+.table-data .order table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.table-data .order table th {
+	padding-bottom: 12px;
+	font-size: 13px;
+	text-align: left;
+	border-bottom: 1px solid var(--grey);
+}
+.table-data .order table td {
+	padding: 16px 0;
+}
+.table-data .order table tr td:first-child {
+	display: flex;
+	align-items: center;
+	grid-gap: 12px;
+	padding-left: 6px;
+}
+.table-data .order table td img {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+.table-data .order table tbody tr:hover {
+	background: var(--grey);
+}
+.table-data .order table tr td .status {
+	font-size: 10px;
+	padding: 6px 16px;
+	color: var(--light);
+	border-radius: 20px;
+	font-weight: 700;
+}
+
+
+
+/* MAIN */
+/* CONTENT */
+
+
+
+/* Mary */
+/* Form */
+/* .bordermain {
+    border: 1px solid white;
+    border-radius: 5px;
+    margin: 0% 2% 2% 2%;
+    background-color: #fff;
+    box-shadow: 0 .5rem 1.5rem rgba(0,0,0,0.1);
+} */
+
+/* block ชื่อที่มีคำนำหน้า */
+.name {
+    width: 63%;
+    padding: 0% 1%;
+}
+
+/* สำหรับ 1 input */
+.box{
+    padding: 0% 1%;
+}
+
+.box1{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/* 1 input width 50% */
+.box-1{
+    padding: 0% 1%;
+    width: 50%;
+}
+
+
+.box1-1 , .box1-2 , .box1-3 , .box1-4 {
+    width: 30%;
+    padding: 0% 1%;
+}
+
+.line1, .line1-1{
+    width: 90%;
+    padding: 0% 1%;
+}
+
+.line {
+    width: 25%;
+    padding: 0% 1%;
+}
+
+.line1, .line1-1{
+    width: 90%;
+    padding: 0% 1%;
+}

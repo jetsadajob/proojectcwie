@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "Menu/.vscode"
+		},
+		{
+			"path": "Menu/assets"
+		},
+		{
+			"path": "Menu/bootstrap"
+		},
+		{
+			"path": "Menu/bootstrap-icons"
+		},
+		{
+			"path": "Menu/Prompt"
+		}
+	]
+}

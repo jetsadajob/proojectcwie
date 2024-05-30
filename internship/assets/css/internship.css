@@ -1,0 +1,22 @@
+.title {
+    background-color: #1a145b;
+    color: white;
+    padding: 6px;
+}
+
+.require::after {
+    content: "*";
+    color: red;
+}
+
+nav .breadcrumb a{
+    color: gray;
+}
+
+button a{
+    text-decoration: none;
+}
+
+.button button {
+    padding: 0.8% 2%;
+}

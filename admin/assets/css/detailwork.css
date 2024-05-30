@@ -1,0 +1,31 @@
+.grid-view .table th a {
+    color: #B65921;
+}
+
+.form-title {
+    font-size: 18px;
+    margin: 0 0 20px;
+    color: #2c66af;
+    border-bottom: 1px dotted #2c66af;
+    padding-bottom: 5px;
+}
+
+.wrapper-preview-list {
+    font-size: 14px;
+    border: 1px solid #6680a0;
+    border-top: 3px solid #6680a0;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    padding: 20px;
+    line-height: 28px;
+}
+
+.wrapper-preview-list-1 {
+    font-size: 14px;
+    line-height: 28px;
+}
+
+.border-bootom {
+    border-bottom: 1px dotted #ddd;
+}
